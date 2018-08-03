@@ -1,36 +1,24 @@
 package example
 
-import kotlinx.html.*
-import kotlinx.html.dom.*
+import kotlinx.html.div
+import kotlinx.html.dom.create
+import kotlinx.html.textInput
+import org.w3c.dom.Node
 import kotlin.browser.document
 import kotlin.browser.window
 
-
-val myDiv = document.create.div {
-    p { +"text inside" }
-}
-
 fun main(args: Array<String>) {
-    document.body?.append(myDiv)
-    appendRepeat()
+    document.body?.append(createMyDiv())
 }
 
-fun appendRepeat() {
-    window.setInterval({
-        val myDiv = document.create.div("panel") {
-            p {
-                +"Here is "
-                a("http://kotlinlang.org") { +"official Kotlin site" }
-            }
+fun createMyDiv(): Node {
+    return document.create.div {
+        textInput {
+            this.value = "Hello"
+            window.setTimeout({
+                this.value = "Changed!"
+            }, 1000)
         }
-
-        val container = document.getElementById("container")
-        container?.appendChild(myDiv)
-        container?.append {
-            div {
-                +"added it"
-            }
-        }
-    }, 1000)
+    }
 }
 
